@@ -16,11 +16,17 @@ async def main(request: Request):
         DEEPSEEK_API_URL,
         headers={"Authorization": f"Bearer {DEEPSEEK_API_KEY}"},
         json={
-            "model": "meta-llama/llama-3.3-70b-instruct:free",
+            "model": "openrouter/free",
             "messages": [{"role": "user", "content": user_text}],
         }
     )
-    answer = response.json()["choices"][0]["message"]["content"]
+    response_data = response.json()
+if "error" in response_data:
+    answer = f"Ошибка OpenRouter: {response_data['error'].get('message', 'Неизвестная ошибка')}"
+elif "choices" not in response_data or not response_data["choices"]:
+    answer = "Нейросеть временно недоступна. Попробуйте еще раз."
+else:
+    answer = response_data["choices"][0]["message"]["content"]
 
     return {
         "version": body["version"],
