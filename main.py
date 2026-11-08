@@ -10,7 +10,7 @@ API_URL = "https://api.groq.com/openai/v1/chat/completions"
 API_KEY = os.getenv("DEEPSEEK_API_KEY")
 
 # Модель, которая точно работает и быстро отвечает
-MODEL_NAME = "llama-3.1-8b-instant"  # или "openai/gpt-oss-20b"
+MODEL_NAME = "openai/gpt-oss-120b"
 
 @app.post("/")
 async def main(request: Request):
