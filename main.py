@@ -7,7 +7,7 @@ app = FastAPI()
 
 API_URL = "https://api.groq.com/openai/v1/chat/completions"
 API_KEY = os.getenv("DEEPSEEK_API_KEY")
-MODEL_NAME = "llama-3.1-8b-instant"  # Быстрая стабильная модель
+MODEL_NAME = "openai/gpt-oss-20b"  # Актуальная модель Groq 2026
 
 @app.post("/")
 async def main(request: Request):
@@ -39,7 +39,7 @@ async def main(request: Request):
                     json={
                         "model": MODEL_NAME,
                         "messages": [{"role": "user", "content": user_text}],
-                        "max_tokens": 400  # Ограничиваем длину ответа, чтобы уложиться в лимит Алисы
+                        "max_tokens": 350  # Ограничение длины ответа для соответствия лимиту 1024 символа
                     },
                     timeout=3.8
                 ),
@@ -62,7 +62,6 @@ async def main(request: Request):
     except Exception as e:
         answer = f"Ошибка: {str(e)[:50]}"
 
-    # Защитное обрезание текста до 1024 символов для соблюдения лимитов Алисы
     answer = answer[:1020].strip()
 
     return {
