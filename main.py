@@ -27,7 +27,7 @@ async def main(request: Request):
             API_URL,
             headers={"Authorization": f"Bearer {API_KEY}"},
             json={
-                "model": "llama-3.3-70b-versatile", # Быстрая и умная модель
+                "model": "openai/gpt-oss-120b", # Быстрая и умная модель
                 "messages": [{"role": "user", "content": user_text}],
             },
             timeout=3.5 
